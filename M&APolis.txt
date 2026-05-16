@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1A2744" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="M&APOLIS" />
+  <meta name="description" content="M&APOLIS arte e cultura – Napoletani turisti a Napoli." />
+  <title>M&amp;APOLIS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: #F7F5F0; color: #1A2744; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; }
+    button { font: inherit; border: none; background: none; cursor: pointer; }
+
+    #app { max-width: 480px; margin: 0 auto; min-height: 100vh; }
+    .page { display: none; padding-bottom: 80px; }
+    .page.active { display: block; }
+
+    .page-header { background: #1A2744; padding: 56px 28px 32px; }
+    .page-header .label { font-size: 11px; color: #C9A84C; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 10px; }
+    .page-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: #F7F5F0; font-weight: 400; }
+
+    .tag { display: inline-block; background: rgba(201,168,76,.15); color: #C9A84C; border: 1px solid rgba(201,168,76,.4); border-radius: 2px; padding: 2px 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; margin-bottom: 4px; }
+
+    .btn-primary { display: block; text-align: center; background: #C9A84C; color: #1A2744; font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 15px; border-radius: 2px; width: 100%; }
+    .btn-dark { display: block; text-align: center; background: #1A2744; color: #F7F5F0; font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 15px; border-radius: 2px; width: 100%; }
+    .btn-outline-light { display: inline-block; background: transparent; color: #F7F5F0; border: 1px solid rgba(255,255,255,.35); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 14px 22px; border-radius: 2px; cursor: pointer; }
+    .btn-outline-ghost { display: block; text-align: center; background: transparent; color: #F7F5F0; border: 1px solid rgba(255,255,255,.25); font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 13px; border-radius: 2px; width: 100%; }
+    .btn-muted { display: block; text-align: center; background: transparent; color: #8A8578; border: 1px solid rgba(255,255,255,.12); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 10px; border-radius: 2px; width: 100%; }
+
+    /* HOME */
+    #hero { min-height: 90vh; background: linear-gradient(175deg, #0D1728 0%, #1A2744 55%, #263860 100%); display: flex; flex-direction: column; justify-content: center; padding: 60px 28px 80px; position: relative; overflow: hidden; }
+    #hero::before { content: ''; position: absolute; inset: 0; opacity: .04; background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C9A84C'%3E%3Ccircle cx='40' cy='40' r='1.5'/%3E%3Ccircle cx='0' cy='0' r='1.5'/%3E%3Ccircle cx='80' cy='0' r='1.5'/%3E%3Ccircle cx='0' cy='80' r='1.5'/%3E%3Ccircle cx='80' cy='80' r='1.5'/%3E%3C/g%3E%3C/svg%3E"); }
+    #hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #C9A84C, transparent); }
+    .hero-content { position: relative; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: .25em; color: #C9A84C; text-transform: uppercase; margin-bottom: 20px; }
+    #hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 56px; line-height: 1; color: #F7F5F0; font-weight: 400; white-space: nowrap; margin-bottom: 6px; }
+    #hero h1 .amp { color: #C9A84C; }
+    .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: #8A8578; margin-bottom: 24px; }
+    .hero-claim { font-size: 15px; color: #C9C4B8; line-height: 1.75; max-width: 300px; margin-bottom: 36px; }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-ctas .btn-primary { width: auto; padding: 14px 22px; }
+
+    #quote-teaser { background: #EDE8DE; padding: 28px 28px; border-top: 3px solid #C9A84C; }
+    #quote-teaser .label { font-size: 11px; letter-spacing: .2em; color: #C9A84C; text-transform: uppercase; margin-bottom: 10px; }
+    #quote-teaser h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #1A2744; font-weight: 600; margin-bottom: 8px; }
+    #quote-teaser p { font-size: 14px; color: #8A8578; line-height: 1.65; margin-bottom: 18px; }
+    #quote-teaser .link { color: #1A2744; font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+
+    #numeri { background: #1A2744; padding: 32px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .num-n { font-family: 'Cormorant Garamond', serif; font-size: 44px; color: #C9A84C; line-height: 1; }
+    .num-label { font-size: 12px; color: #8A8578; margin-top: 4px; }
+
+    /* ASSOCIAZIONE */
+    .assoc-block { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .assoc-intro { background: #1A2744; border-radius: 3px; padding: 28px 24px; border-left: 4px solid #C9A84C; }
+    .assoc-intro p { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; color: #F7F5F0; line-height: 1.6; }
+    .assoc-para { background: white; border: 1px solid #EDE8DE; border-radius: 3px; padding: 20px 22px; }
+    .assoc-para p { font-size: 14px; color: #1A2744; line-height: 1.8; }
+    .assoc-manifesto { background: #EDE8DE; border-radius: 3px; padding: 24px; text-align: center; }
+    .assoc-manifesto p { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #1A2744; line-height: 1.6; }
+    .assoc-manifesto .gold { color: #C9A84C; font-weight: 600; }
+    .assoc-dati { background: #1A2744; border-radius: 3px; padding: 20px 24px; }
+    .dati-label { font-size: 11px; letter-spacing: .15em; color: #C9A84C; text-transform: uppercase; margin-bottom: 12px; }
+    .dati-row { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .dati-row:last-child { border-bottom: none; }
+    .dati-k { font-size: 11px; color: #8A8578; flex-shrink: 0; width: 100px; padding-top: 1px; }
+    .dati-v { font-size: 13px; color: #F7F5F0; line-height: 1.5; }
+
+    /* TIMELINE */
+    .timeline { padding: 0 20px 8px; display: flex; flex-direction: column; }
+    .tl-item { display: flex; gap: 16px; padding-bottom: 20px; }
+    .tl-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .tl-dot { width: 10px; height: 10px; background: #C9A84C; border-radius: 50%; }
+    .tl-line { width: 1px; background: rgba(201,168,76,.3); flex: 1; margin-top: 4px; }
+    .tl-item:last-child .tl-line { display: none; }
+    .tl-data { font-size: 11px; color: #C9A84C; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
+    .tl-text { font-size: 14px; color: #1A2744; line-height: 1.6; }
+
+    /* PARTECIPA */
+    #partecipa-content { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .quote-card { background: white; border: 1px solid #EDE8DE; border-radius: 3px; padding: 22px; }
+    .quote-card.featured { border-color: rgba(201,168,76,.5); border-width: 2px; }
+    .qc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .quote-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #1A2744; font-weight: 600; margin-top: 4px; }
+    .qc-price { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #C9A84C; flex-shrink: 0; padding-left: 12px; }
+    .qc-price span { font-size: 14px; color: #8A8578; }
+    .quote-card .qc-desc { font-size: 13px; color: #8A8578; line-height: 1.65; margin-bottom: 14px; }
+    .qc-bullet { display: flex; gap: 8px; font-size: 13px; color: #1A2744; margin-bottom: 6px; line-height: 1.5; }
+    .qc-bullet::before { content: "—"; color: #C9A84C; flex-shrink: 0; }
+
+    .iban-box { background: #1A2744; border-radius: 3px; padding: 20px 24px; }
+    .iban-label { font-size: 11px; color: #C9A84C; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 12px; }
+    .iban-num { font-size: 14px; color: #F7F5F0; letter-spacing: .04em; margin-bottom: 4px; word-break: break-all; }
+    .iban-banca { font-size: 12px; color: #8A8578; margin-bottom: 12px; }
+    .iban-causale { font-size: 12px; color: #8A8578; line-height: 1.7; }
+    .iban-causale strong { color: #C9A84C; }
+
+    .moduli-box { background: #EDE8DE; border-radius: 3px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+    .moduli-label { font-size: 11px; color: #C9A84C; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 4px; }
+
+    /* CONTATTI */
+    #contatti-content { padding: 24px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .contatto-card { background: white; border: 1px solid #EDE8DE; border-radius: 3px; padding: 20px; }
+    .c-inner { display: flex; gap: 14px; align-items: flex-start; }
+    .c-icon { font-size: 22px; flex-shrink: 0; }
+    .contatto-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #1A2744; font-weight: 600; margin-bottom: 4px; }
+    .contatto-card p { font-size: 13px; color: #8A8578; line-height: 1.6; }
+    #contatti-ctas { padding: 0 20px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+    .trasparenza-box { margin: 0 20px 24px; background: #1A2744; border-radius: 3px; padding: 22px 24px; border-top: 3px solid #C9A84C; }
+    .t-label { font-size: 11px; color: #C9A84C; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 8px; }
+    .trasparenza-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #F7F5F0; font-weight: 400; margin-bottom: 10px; }
+    .trasparenza-box p { font-size: 13px; color: #8A8578; line-height: 1.65; margin-bottom: 14px; }
+    .t-links { display: flex; flex-direction: column; gap: 8px; }
+
+    /* NAV */
+    #bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: #0D1728; border-top: 2px solid #C9A84C; display: flex; justify-content: space-around; padding: 10px 0 max(14px, env(safe-area-inset-bottom)); max-width: 480px; margin: 0 auto; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #8A8578; cursor: pointer; transition: color .2s; padding: 0 12px; }
+    .nav-btn.active { color: #C9A84C; }
+    .nav-icon { font-size: 20px; }
+    .nav-label { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME -->
+  <section id="page-home" class="page active">
+    <div id="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Napoli · Arte & Cultura</p>
+        <h1>M<span class="amp">&amp;</span>APOLIS</h1>
+        <p class="hero-sub">arte e cultura</p>
+        <p class="hero-claim">Un viaggio alla scoperta della nostra città… e oltre. Da febbraio 2024.</p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="goTo('partecipa')">Partecipa</button>
+          <button class="btn-outline-light" onclick="goTo('associazione')">Chi siamo</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quote-teaser">
+      <p class="label">L'Associazione</p>
+      <h2>Napoletani turisti a Napoli</h2>
+      <p>Dall'idea nata quasi per gioco al desiderio di stare insieme e guardare Napoli con occhi curiosi. Oggi siamo un'associazione culturale ufficiale.</p>
+      <button class="link" onclick="goTo('associazione')">Scopri la nostra storia →</button>
+    </div>
+
+    <div id="numeri">
+      <div><p class="num-n">2024</p><p class="num-label">Anno di fondazione</p></div>
+      <div><p class="num-n">€50</p><p class="num-label">Quota sostenitore</p></div>
+      <div><p class="num-n">3+</p><p class="num-label">Città collegate</p></div>
+      <div><p class="num-n">∞</p><p class="num-label">Bellezza da scoprire</p></div>
+    </div>
+  </section>
+
+  <!-- ASSOCIAZIONE -->
+  <section id="page-associazione" class="page">
+    <div class="page-header">
+      <p class="label">La nostra storia</p>
+      <h2>L'Associazione</h2>
+    </div>
+
+    <div class="assoc-block">
+      <div class="assoc-intro">
+        <p>"Da un'idea nata quasi per gioco, dal desiderio di stare insieme e guardare Napoli con occhi curiosi."</p>
+      </div>
+      <div class="assoc-para">
+        <p>Da febbraio 2024 abbiamo cominciato questo cammino con una missione semplice e profonda: far conoscere le meraviglie di Napoli – la sua storia millenaria, le sue chiese, i musei, le gallerie, i vicoli e i quartieri – in compagnia di amiche e amici, condividendo bellezza, emozioni e conoscenza.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><p class="tl-data">Febbraio 2024</p><p class="tl-text">Prima visita: Napoli al tempo di Napoleone. Nasce M&APOLIS.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><p class="tl-data">2024 – 2025</p><p class="tl-text">Decine di visite mensili. Chiese, catacombe, musei e angoli nascosti di Napoli.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div><p class="tl-data">Oggi</p><p class="tl-text">Si uniscono amici da Cosenza, Roma e Milano. M&APOLIS cresce oltre Napoli.</p></div>
+      </div>
+    </div>
+
+    <div class="assoc-block" style="padding-top:0;">
+      <div class="assoc-para">
+        <p>Perché la cultura non è solo da ammirare ma anche da custodire, M&APOLIS promuove una raccolta fondi destinata al recupero, alla tutela e alla valorizzazione del nostro patrimonio culturale, con l'impegno concreto di restituire bellezza ai luoghi che ci accolgono.</p>
+      </div>
+      <div class="assoc-manifesto">
+        <p><span class="gold">M&APOLIS</span> è il punto di partenza.<br>La cultura è il filo che ci unisce.<br>Il viaggio è appena iniziato.</p>
+      </div>
+      <div class="assoc-dati">
+        <p class="dati-label">Dati ufficiali</p>
+        <div class="dati-row"><span class="dati-k">Denominazione</span><span class="dati-v">M&APOLIS arte e cultura</span></div>
+        <div class="dati-row"><span class="dati-k">Sede legale</span><span class="dati-v">Via Pietro Colletta, 35 – 80139 Napoli (NA)</span></div>
+        <div class="dati-row"><span class="dati-k">Cod. Fiscale</span><span class="dati-v">95359790631</span></div>
+        <div class="dati-row"><span class="dati-k">Natura</span><span class="dati-v">Ass. culturale senza scopo di lucro</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTECIPA -->
+  <section id="page-partecipa" class="page">
+    <div class="page-header">
+      <p class="label">Unisciti a noi</p>
+      <h2>Partecipa</h2>
+    </div>
+
+    <div id="partecipa-content">
+
+      <div class="quote-card">
+        <div class="qc-header">
+          <div><span class="tag">Non socio</span><h3>Sostenitore</h3></div>
+          <p class="qc-price">€50<span>/anno</span></p>
+        </div>
+        <p class="qc-desc">Partecipa alle attività culturali come ospite. La formula ideale per avvicinarsi a M&APOLIS.</p>
+        <div class="qc-bullet">Accesso alle visite e agli eventi</div>
+        <div class="qc-bullet">Community generale (chat e bacheca)</div>
+        <div class="qc-bullet">Iscrizione nel Libro dei Sostenitori</div>
+        <div class="qc-bullet">Nessun diritto di voto assembleare</div>
+      </div>
+
+      <div class="quote-card featured">
+        <div class="qc-header">
+          <div><span class="tag">Socio</span><h3>Socio Ordinario</h3></div>
+          <p class="qc-price">€100<span>/anno</span></p>
+        </div>
+        <p class="qc-desc">Partecipa attivamente alla vita culturale e amministrativa. Ammissione soggetta ad approvazione del Consiglio Direttivo.</p>
+        <div class="qc-bullet">Tutto ciò che include la quota Sostenitore</div>
+        <div class="qc-bullet">Diritto di voto in Assemblea</div>
+        <div class="qc-bullet">Canale riservato soci con anteprime eventi</div>
+        <div class="qc-bullet">Proposta di iniziative solidali e culturali</div>
+      </div>
+
+      <div class="iban-box">
+        <p class="iban-label">Pagamento tramite bonifico</p>
+        <p class="iban-num">IT77 Y030 6909 6061 0000 0416 910</p>
+        <p class="iban-banca">Intesa Sanpaolo · intestato a M&APOLIS arte e cultura</p>
+        <p class="iban-causale">Causale: <strong>"Quota Socio Ordinario anno XXXX"</strong> oppure <strong>"Contributo Sostenitore anno XXXX"</strong> + Nome e Cognome</p>
+      </div>
+
+      <div class="moduli-box">
+        <p class="moduli-label">Moduli di adesione</p>
+        <a class="btn-dark" href="https://forms.gle/nQHGsyM7tEpoXgQ57" target="_blank">📋 Modulo Sostenitori Online</a>
+        <a class="btn-dark" style="background:#263860;" href="https://docs.google.com/document/d/1FimF2dx3JvWh1f6cfKgUc8d8N3saBW1M/edit?usp=sharing" target="_blank">📄 Scarica Modulo Sostenitori</a>
+      </div>
+
+      <p style="font-size:12px; color:#8A8578; text-align:center; padding: 0 8px 8px;">
+        Per diventare Socio Ordinario scrivi prima a <strong>info@meapolis.com</strong> per richiedere il modulo di ammissione.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- CONTATTI -->
+  <section id="page-contatti" class="page">
+    <div class="page-header">
+      <p class="label">Scrivici</p>
+      <h2>Contatti</h2>
+    </div>
+
+    <div id="contatti-content">
+      <div class="contatto-card">
+        <div class="c-inner"><span class="c-icon">✉️</span>
+          <div><h3>Email</h3><p>info@meapolis.com</p></div>
+        </div>
+      </div>
+      <div class="contatto-card">
+        <div class="c-inner"><span class="c-icon">📍</span>
+          <div><h3>Sede legale</h3><p>Via Pietro Colletta, 35<br>80139 Napoli (NA)</p></div>
+        </div>
+      </div>
+      <div class="contatto-card">
+        <div class="c-inner"><span class="c-icon">🏛</span>
+          <div><h3>Codice Fiscale</h3><p>95359790631</p></div>
+        </div>
+      </div>
+      <div class="contatto-card">
+        <div class="c-inner"><span class="c-icon">🌐</span>
+          <div><h3>Sito web</h3><p>meapolis.com</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="contatti-ctas">
+      <a class="btn-dark" href="mailto:info@meapolis.com">✉️ Scrivici</a>
+      <a class="btn-primary" href="https://www.meapolis.com" target="_blank" style="color:#1A2744;">🌐 Visita il sito</a>
+    </div>
+
+    <div class="trasparenza-box">
+      <p class="t-label">Trasparenza</p>
+      <h3>Statuto & Regolamento</h3>
+      <p>M&APOLIS è un'associazione apolitica, apartitica e senza scopo di lucro. Tutti i documenti ufficiali sono pubblici. Regolamento approvato il 15/05/2026.</p>
+      <div class="t-links">
+        <a class="btn-outline-ghost" href="https://drive.google.com/file/d/14GIuIYvNBfEg3xP9YPwgPXzFvznt8vu2/view?usp=sharing" target="_blank">📄 Scarica Statuto</a>
+        <a class="btn-outline-ghost" href="https://drive.google.com/file/d/1eAImBxKjB1M3IXfNVao51kCO-1ll5ExI/view?usp=sharing" target="_blank">📄 Scarica Regolamento</a>
+        <a class="btn-muted" href="https://www.meapolis.com/privacy-policy" target="_blank">Privacy Policy</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- NAV -->
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-page="home" onclick="goTo('home')">
+      <span class="nav-icon">🏛</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-btn" data-page="associazione" onclick="goTo('associazione')">
+      <span class="nav-icon">📖</span>
+      <span class="nav-label">Chi siamo</span>
+    </button>
+    <button class="nav-btn" data-page="partecipa" onclick="goTo('partecipa')">
+      <span class="nav-icon">🎟</span>
+      <span class="nav-label">Partecipa</span>
+    </button>
+    <button class="nav-btn" data-page="contatti" onclick="goTo('contatti')">
+      <span class="nav-icon">✉️</span>
+      <span class="nav-label">Contatti</span>
+    </button>
+  </nav>
+
+</div>
+<script>
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === page);
+  });
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
